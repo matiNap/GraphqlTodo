@@ -1,0 +1,42 @@
+{
+  "compilerOptions": {
+    "target": "es2017",
+    "lib": ["es6"],
+    "jsx": "react-native",
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictPropertyInitialization": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "types": ["react", "react-native", "jest"],
+    "skipLibCheck": true,
+    "baseUrl": "./",
+    "allowJs": true,
+    "paths": {
+      "_actions/*": ["./actions/*"],
+      "_hocs/*": ["./hocs/*"],
+      "_apis/*": ["./apis/*"],
+      "_assets/*": ["./assets/*"],
+      "_helpers/*": ["./helpers/*"],
+      "_components/*": ["./screens/components/*"],
+      "_typography": ["./theme/typography"],
+      "_palette": ["./theme/palette.js"],
+      "_metrics": ["./theme/metrics.js"],
+      "_globals": ["./theme/globals.js"],
+      "_zIndex": ["./theme/zIndex.js"],
+      "_navigation": ["./navigate.ts"],
+      "_types": ["./types/index.ts"],
+      "_rootReducer": ["./reducers/index.ts"],
+      "_package/*": ["../packages/src/*"]
+    }
+  }
+}
