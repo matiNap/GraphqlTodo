@@ -2,12 +2,20 @@ import { gql } from 'apollo-boost';
 
 export const updateTodo = gql`
   mutation($todoId: Int!, $title: String!) {
-    updateTodo(id: $todoId, title: $title)
+    updateTodo(id: $todoId, title: $title) {
+      title
+      id
+      tasks {
+        content
+        done
+        id
+      }
+    }
   }
 `;
 
 export const createTodo = gql`
-  mutation createTodo($title: String!) {
+  mutation($title: String!) {
     createTodo(title: $title) {
       title
       id
@@ -15,6 +23,14 @@ export const createTodo = gql`
         id
         content
       }
+    }
+  }
+`;
+
+export const deleteTodo = gql`
+  mutation($id: Int!) {
+    deleteTodo(id: $id) {
+      id
     }
   }
 `;

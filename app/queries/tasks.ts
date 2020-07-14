@@ -2,7 +2,7 @@ import { gql } from 'apollo-boost';
 
 export const fetchTasks = gql`
   query($todoId: Int!) {
-    fetchTasks(todoId: $todoId) @client {
+    fetchTasks(todoId: $todoId) {
       content
       done
       id

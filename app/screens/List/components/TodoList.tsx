@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
-  StyleSheet,
   ActivityIndicator,
   View,
   Text,
+  StyleSheet,
 } from 'react-native';
 import Todo from './Todo';
 import {
@@ -16,13 +16,32 @@ import { todo, createTodoVariables } from 'types';
 import palette from '_palette';
 import { createTodo } from '../../../mutations/todos';
 import { updateCreateTodo } from '../../../updates/todos';
+import Animated, {
+  Easing,
+  interpolate,
+} from 'react-native-reanimated';
+import { useTimingTransition } from 'react-native-redash';
+import metrics from '_metrics';
+
+const CLOSE_EDIT_HEIGHT = metrics.width * 0.15;
 
 export default function TodoList() {
   const { data, loading } = useQuery<{ todos: todo[] }>(getTodos, {
     fetchPolicy: 'cache-and-network',
   });
-
+  const [editEnabled, setEditEnabled] = useState(false);
   const [addTodo] = useMutation<any, createTodoVariables>(createTodo);
+  const transition = useTimingTransition(editEnabled, {
+    easing: Easing.inOut(Easing.ease),
+  });
+  const offsetY = interpolate(transition, {
+    inputRange: [0, 1],
+    outputRange: [CLOSE_EDIT_HEIGHT, 0],
+  });
+  const addOpacity = interpolate(transition, {
+    inputRange: [0, 1],
+    outputRange: [1, 0],
+  });
   return (
     <View style={styles.container}>
       {loading && !data && (
@@ -37,7 +56,19 @@ export default function TodoList() {
         {data &&
           data.todos &&
           data.todos.map((todo) => (
-            <Todo {...{ todo }} key={`$todo:${todo.id}`} />
+            <TouchableWithoutFeedback
+              key={`$todo:${todo.id}`}
+              onLongPress={() => {
+                setEditEnabled(true);
+              }}
+            >
+              <Todo
+                {...{ todo }}
+                key={`$todo:${todo.id}`}
+                {...{ editEnabled }}
+                editTransition={transition}
+              />
+            </TouchableWithoutFeedback>
           ))}
         {loading && data && (
           <ActivityIndicator
@@ -65,9 +96,27 @@ export default function TodoList() {
             });
           }}
         >
-          <Text style={styles.add}>ADD</Text>
+          <Animated.Text
+            style={[styles.add, { opacity: addOpacity }]}
+          >
+            ADD
+          </Animated.Text>
         </TouchableWithoutFeedback>
       </ScrollView>
+      <Animated.View
+        style={[
+          styles.closeEdit,
+          { transform: [{ translateY: offsetY }] },
+        ]}
+      >
+        <TouchableWithoutFeedback
+          onPress={() => {
+            setEditEnabled(false);
+          }}
+        >
+          <Text style={styles.closeEditText}>Close</Text>
+        </TouchableWithoutFeedback>
+      </Animated.View>
     </View>
   );
 }
@@ -91,6 +140,17 @@ const styles = StyleSheet.create({
     fontSize: 22,
     marginTop: 30,
     alignSelf: 'center',
+    fontWeight: 'bold',
+  },
+  closeEdit: {
+    position: 'absolute',
+    bottom: 0,
+    alignSelf: 'center',
+    height: CLOSE_EDIT_HEIGHT,
+  },
+  closeEditText: {
+    fontSize: 22,
+    color: palette.secondary,
     fontWeight: 'bold',
   },
 });

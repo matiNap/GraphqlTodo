@@ -20,33 +20,28 @@ export class TodoResolver {
     return todo;
   }
 
-  @Mutation(() => Boolean)
+  @Mutation(() => Todo)
   async updateTodo(
     @Arg("id", () => Int) id: number,
     @Arg("title", () => String) title: string
   ) {
-    try {
-      await Todo.update({ id }, { title });
-      return true;
-    } catch (e) {
-      return false;
-    }
+    await Todo.update({ id }, { title });
+    const updated = await Todo.findOne({ id });
+    return updated;
   }
 
-  @Mutation(() => Boolean)
+  @Mutation(() => Todo)
   async deleteTodo(@Arg("id", () => Int) id: number) {
-    try {
-      await Todo.delete({ id });
-      return true;
-    } catch (e) {
-      return false;
-    }
+    const deleted = await Todo.findOne({ id });
+    await Todo.delete({ id });
+    return deleted;
   }
 
   @Mutation(() => Boolean)
   async cleanTodos() {
     try {
       await Todo.clear();
+      await Task.clear();
 
       return true;
     } catch (e) {

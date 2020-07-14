@@ -5,7 +5,12 @@ export const updateTask = gql`
     updateTask(
       id: $taskId
       update: { content: $content, done: $done }
-    )
+    ) {
+      content
+      id
+      done
+      todoId
+    }
   }
 `;
 
@@ -15,6 +20,15 @@ export const createTask = gql`
       id
       content
       done
+      todoId
+    }
+  }
+`;
+
+export const deleteTask = gql`
+  mutation($id: Int!) {
+    deleteTask(id: $id) {
+      id
       todoId
     }
   }

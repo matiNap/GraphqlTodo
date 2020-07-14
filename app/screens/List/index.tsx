@@ -3,11 +3,8 @@ import { StyleSheet, Text, View } from 'react-native';
 import palette from '_palette';
 import Header from './components/Header';
 import TodoList from './components/TodoList';
-import { useQuery } from 'react-apollo';
-import { getTasks } from '../../queries/tasks';
 
 export default () => {
-  useQuery(getTasks);
   return (
     <View style={{ flex: 1 }}>
       <Header>
