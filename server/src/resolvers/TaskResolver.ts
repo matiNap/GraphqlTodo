@@ -37,29 +37,26 @@ export class TaskResolver {
     return task;
   }
 
-  @Mutation(() => Boolean)
+  @Mutation(() => Task)
   async updateTask(
     @Arg("id", () => Int) id: number,
     @Arg("update", () => UpdateTaskInput) update: UpdateTaskInput
   ) {
     try {
       await Task.update({ id }, update);
-
-      return true;
+      const updated = await Task.findOne({ id });
+      return updated;
     } catch (e) {
       return false;
     }
   }
 
-  @Mutation(() => Boolean)
+  @Mutation(() => Task)
   async deleteTask(@Arg("id", () => Int) id: number) {
-    try {
-      await Task.delete({ id });
+    const deleted = await Task.findOne({ id });
+    await Task.delete({ id });
 
-      return true;
-    } catch (e) {
-      return false;
-    }
+    return deleted;
   }
 
   @Query(() => [Task])

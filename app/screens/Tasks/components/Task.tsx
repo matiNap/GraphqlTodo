@@ -5,19 +5,31 @@ import {
   TextInput,
   TouchableWithoutFeedback,
 } from 'react-native-gesture-handler';
-import { task, updateTaskVariables } from 'types';
+import {
+  task,
+  updateTaskVariables,
+  deleteTaskVariables,
+} from 'types';
 import { useMutation } from 'react-apollo';
-import { updateTask } from '../../../mutations/tasks';
+import { updateTask, deleteTask } from '../../../mutations/tasks';
+import { updateDeleteTask } from '../../../updates/tasks';
 
 interface Props {
   task: task;
+  todoId: number;
 }
 
-export default function Task({ task: { content, done, id } }: Props) {
+export default function Task({
+  task: { content, done, id },
+  todoId,
+}: Props) {
   const [contentValue, setContentValue] = useState(content);
   const [isDone, setIsDone] = useState(done);
   const [editTask] = useMutation<any, updateTaskVariables>(
     updateTask,
+  );
+  const [removeTask] = useMutation<any, deleteTaskVariables>(
+    deleteTask,
   );
   return (
     <View style={styles.container}>
@@ -36,8 +48,27 @@ export default function Task({ task: { content, done, id } }: Props) {
         <View style={[styles.point, isDone ? styles.checked : {}]} />
       </TouchableWithoutFeedback>
       <TextInput
+        numberOfLines={1}
         style={styles.content}
         value={contentValue}
+        onKeyPress={() => {
+          if (contentValue === '') {
+            removeTask({
+              variables: {
+                id,
+              },
+              optimisticResponse: {
+                __typename: 'Mutation',
+                deleteTask: {
+                  __typename: 'Task',
+                  id,
+                  todoId,
+                },
+              },
+              update: updateDeleteTask,
+            });
+          }
+        }}
         onChangeText={(text) => {
           setContentValue(text);
           editTask({

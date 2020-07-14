@@ -1,3 +1,5 @@
+import { interpolate } from 'react-native-reanimated';
+
 export interface task {
   content: string;
   id: number;
@@ -36,4 +38,11 @@ export interface fetchTasksVariables {
 
 export interface fetchTasksData {
   fetchTasks: task[];
+}
+
+export interface deleteTodoVariables {
+  id: number;
+}
+export interface deleteTaskVariables {
+  id: number;
 }
