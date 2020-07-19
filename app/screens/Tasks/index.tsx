@@ -68,10 +68,11 @@ export default function Tasks({
           value={name}
           onChangeText={(text) => {
             setName(text);
+
             editTodo({
               variables: {
                 todoId: id,
-                title: name,
+                title: text,
               },
             });
           }}

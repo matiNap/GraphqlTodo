@@ -22,10 +22,6 @@
     "baseUrl": "./",
     "allowJs": true,
     "paths": {
-      "_actions/*": ["./actions/*"],
-      "_hocs/*": ["./hocs/*"],
-      "_apis/*": ["./apis/*"],
-      "_assets/*": ["./assets/*"],
       "_helpers/*": ["./helpers/*"],
       "_components/*": ["./screens/components/*"],
       "_typography": ["./theme/typography"],
@@ -33,10 +29,7 @@
       "_metrics": ["./theme/metrics.js"],
       "_globals": ["./theme/globals.js"],
       "_zIndex": ["./theme/zIndex.js"],
-      "_navigation": ["./navigate.ts"],
-      "_types": ["./types/index.ts"],
-      "_rootReducer": ["./reducers/index.ts"],
-      "_package/*": ["../packages/src/*"]
+      "_types": ["./types/index.ts"]
     }
   }
 }
