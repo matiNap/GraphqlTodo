@@ -9,7 +9,6 @@ import {
 } from "type-graphql";
 import { Todo } from "../entity/Todo";
 import { Task } from "../entity/Task";
-// import { GetTaskInput } from "./TaskResolver";
 
 @Resolver(Todo)
 export class TodoResolver {

@@ -10,12 +10,6 @@ import {
 import { Task } from "../entity/Task";
 
 @InputType()
-export class GetTaskInput {
-  @Field(() => Int)
-  todoId: number;
-}
-
-@InputType()
 class UpdateTaskInput {
   @Field(() => String)
   content: string;

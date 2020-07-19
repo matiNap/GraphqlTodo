@@ -1,9 +1,7 @@
 import { BaseEntity, PrimaryGeneratedColumn, Column, Entity } from "typeorm";
-import { ObjectType, Field, Int, InputType } from "type-graphql";
-// import { Task } from "./Task";
+import { ObjectType, Field, Int } from "type-graphql";
 
 @ObjectType()
-@InputType("TodoInput")
 @Entity()
 export class Todo extends BaseEntity {
   @Field(() => Int)

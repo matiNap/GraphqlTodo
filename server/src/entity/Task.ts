@@ -1,8 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from "typeorm";
-import { ObjectType, Field, Int, InputType } from "type-graphql";
+import { ObjectType, Field, Int } from "type-graphql";
 
 @ObjectType()
-@InputType("TaskInput")
 @Entity()
 export class Task extends BaseEntity {
   @Field(() => Int)

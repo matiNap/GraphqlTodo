@@ -23,7 +23,7 @@ const cache = new InMemoryCache({
 });
 
 const client = new ApolloClient({
-  uri: 'http://7f4c4bd6d967.ngrok.io/graphql',
+  uri: 'http://f84f43c2c3b6.ngrok.io/graphql',
   cache,
 });
 
