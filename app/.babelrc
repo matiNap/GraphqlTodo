@@ -6,23 +6,16 @@
         "root": ["./"],
         "alias": {
           "_types": "./types/index.ts",
-          "_apis": "./apis/",
-          "_actions": "./actions/",
           "_helpers": "./helpers/",
-          "_assets": "./assets/",
           "_components": "./screens/components/",
           "_typography": "./theme/typography",
           "_palette": "./theme/palette",
           "_metrics": "./theme/metrics",
           "_globals": "./theme/globals",
-          "_zIndex": "./theme/zIndex",
-          "_rootReducer": "./reducers/index.ts",
-          "_yalc": "./.yalc/",
-          "rns": "./react-native-simple/src/index.js",
-          "rnsd": "./react-native-simple/"
+          "_zIndex": "./theme/zIndex"
         }
       }
     ]
   ],
-  "ignore": ["./node_modules/react-native-simple/node_modules"]
+  "presets": ["babel-preset-expo"]
 }
